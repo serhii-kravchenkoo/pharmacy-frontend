@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer>
       {/* Logo */}
       <div>
-        <Link href="/home">E-Pharmacy</Link>
+        <Link href="/">E-Pharmacy</Link>
       </div>
 
       {/* Text */}
