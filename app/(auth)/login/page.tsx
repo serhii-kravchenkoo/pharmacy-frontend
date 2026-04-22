@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
 type FormData = {
@@ -29,7 +30,13 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="Email"
-            {...register('email', { required: 'Email is required' })}
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^\S+@\S+\.\S+$/,
+                message: 'Invalid email format',
+              },
+            })}
           />
           {errors.email && <p>{errors.email.message}</p>}
         </div>
@@ -38,13 +45,20 @@ export default function LoginPage() {
           <input
             type="password"
             placeholder="Password"
-            {...register('password', { required: 'Password is required' })}
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters',
+              },
+            })}
           />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
 
         <button type="submit">Log in</button>
       </form>
+      <Link href="/register">Don't have an account?</Link>
     </div>
   );
 }
