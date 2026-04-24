@@ -1,5 +1,6 @@
 'use client';
 
+import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
@@ -20,11 +21,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <h1>
-        Your medication, delivered Say goodbye to all your healthcare worries
-        with us
-      </h1>
+    <AuthLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <input
@@ -59,6 +56,6 @@ export default function LoginPage() {
         <button type="submit">Log in</button>
       </form>
       <Link href="/register">Don't have an account?</Link>
-    </div>
+    </AuthLayout>
   );
 }
