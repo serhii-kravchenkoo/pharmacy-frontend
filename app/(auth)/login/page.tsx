@@ -1,7 +1,9 @@
 'use client';
 
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
+import { api } from '@/services/api/api';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 type FormData = {
@@ -10,14 +12,22 @@ type FormData = {
 };
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const response = await api.post('/api/user/login', data);
+      console.log(response.data);
+      router.push('/');
+    } catch (error: any) {
+      console.error(error.response?.data || error.message);
+    }
   };
 
   return (
@@ -45,8 +55,8 @@ export default function LoginPage() {
             {...register('password', {
               required: 'Password is required',
               minLength: {
-                value: 6,
-                message: 'Password must be at least 6 characters',
+                value: 8,
+                message: 'Password must be at least 8 characters',
               },
             })}
           />
