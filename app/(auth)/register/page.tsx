@@ -3,6 +3,8 @@
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
+import { useRouter } from 'next/navigation';
+import { api } from '@/services/api/api';
 
 type FormData = {
   name: string;
@@ -12,14 +14,22 @@ type FormData = {
 };
 
 export default function RegisterPage() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const response = await api.post('/api/user/register', data);
+      console.log(response.data);
+      router.push('/');
+    } catch (error: any) {
+      console.error(error.response?.data || error.message);
+    }
   };
 
   return (
