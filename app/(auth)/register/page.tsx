@@ -5,6 +5,13 @@ import Link from 'next/link';
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
 import { useRouter } from 'next/navigation';
 import { api } from '@/services/api/api';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+
+type ErrorResponse = {
+  error?: string;
+  message?: string;
+};
 
 type FormData = {
   name: string;
@@ -27,8 +34,18 @@ export default function RegisterPage() {
       const response = await api.post('/api/user/register', data);
       console.log(response.data);
       router.push('/');
-    } catch (error: any) {
-      console.error(error.response?.data || error.message);
+    } catch (error) {
+      if (axios.isAxiosError<ErrorResponse>(error)) {
+        const message =
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message ||
+          'Registration failed';
+
+        toast.error(message);
+      } else {
+        toast.error('Unexpected error');
+      }
     }
   };
 
