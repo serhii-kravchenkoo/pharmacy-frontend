@@ -2,9 +2,15 @@
 
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
 import { api } from '@/services/api/api';
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+
+type ErrorResponse = {
+  message?: string;
+};
 
 type FormData = {
   email: string;
@@ -25,8 +31,15 @@ export default function LoginPage() {
       const response = await api.post('/api/user/login', data);
       console.log(response.data);
       router.push('/');
-    } catch (error: any) {
-      console.error(error.response?.data || error.message);
+    } catch (error) {
+      if (axios.isAxiosError<ErrorResponse>(error)) {
+        const message =
+          error.response?.data?.message || error.message || 'Login failed';
+
+        toast.error(message);
+      } else {
+        toast.error('Unexpected error');
+      }
     }
   };
 

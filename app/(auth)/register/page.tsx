@@ -9,7 +9,6 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 
 type ErrorResponse = {
-  error?: string;
   message?: string;
 };
 
@@ -37,7 +36,6 @@ export default function RegisterPage() {
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
         const message =
-          error.response?.data?.error ||
           error.response?.data?.message ||
           error.message ||
           'Registration failed';
