@@ -4,19 +4,13 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
 import { useRouter } from 'next/navigation';
-import { api } from '@/services/api/api';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { registerUser } from '@/services/api/auth';
+import { RegisterFormData } from '@/types/auth';
 
 type ErrorResponse = {
   message?: string;
-};
-
-type FormData = {
-  name: string;
-  email: string;
-  phone: string;
-  password: string;
 };
 
 export default function RegisterPage() {
@@ -26,12 +20,12 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<RegisterFormData>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
     try {
-      const response = await api.post('/api/user/register', data);
-      console.log(response.data);
+      const response = await registerUser(data);
+      console.log(response);
       router.push('/');
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {

@@ -1,7 +1,9 @@
 'use client';
 
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
-import { api } from '@/services/api/api';
+
+import { loginUser } from '@/services/api/auth';
+import { LoginFormData } from '@/types/auth';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,11 +14,6 @@ type ErrorResponse = {
   message?: string;
 };
 
-type FormData = {
-  email: string;
-  password: string;
-};
-
 export default function LoginPage() {
   const router = useRouter();
 
@@ -24,12 +21,12 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<LoginFormData>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await api.post('/api/user/login', data);
-      console.log(response.data);
+      const response = await loginUser(data);
+      console.log(response);
       router.push('/');
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
