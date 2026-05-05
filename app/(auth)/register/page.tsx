@@ -26,7 +26,7 @@ export default function RegisterPage() {
     try {
       const response = await registerUser(data);
       console.log(response);
-      router.push('/');
+      router.push('/cart');
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
         const message =
