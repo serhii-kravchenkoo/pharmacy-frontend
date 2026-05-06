@@ -1,6 +1,7 @@
 'use client';
 
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
+import { api } from '@/services/api/api';
 import { loginUser } from '@/services/api/auth';
 import { LoginFormData } from '@/types/auth';
 import axios from 'axios';
@@ -26,7 +27,8 @@ export default function LoginPage() {
     try {
       const response = await loginUser(data);
       console.log(response);
-      router.push('/cart');
+
+      router.push('/');
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
         const message =
