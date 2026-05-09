@@ -1,6 +1,10 @@
+'use client';
+
+import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
 
 export const Header = () => {
+  const user = useAuthStore((state) => state.user);
   return (
     <header>
       <div>
@@ -14,8 +18,14 @@ export const Header = () => {
       </nav>
 
       <div>
-        <Link href="/register">Register</Link>
-        <Link href="/login">Login</Link>
+        {user ? (
+          <p>{user.name}</p>
+        ) : (
+          <>
+            <Link href="/register">Register</Link>
+            <Link href="/login">Login</Link>
+          </>
+        )}
       </div>
     </header>
   );
