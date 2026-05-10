@@ -1,6 +1,7 @@
 'use client';
 
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
+import { useAuthStore } from '@/lib/store/authStore';
 import { api } from '@/services/api/api';
 import { loginUser } from '@/services/api/auth';
 import { LoginFormData } from '@/types/auth';
@@ -16,6 +17,7 @@ type ErrorResponse = {
 
 export default function LoginPage() {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const {
     register,
@@ -27,6 +29,7 @@ export default function LoginPage() {
     try {
       const response = await loginUser(data);
       console.log(response);
+      setUser(response);
 
       router.push('/');
     } catch (error) {

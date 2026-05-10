@@ -12,3 +12,9 @@ export const loginUser = async (data: LoginFormData) => {
   const response = await api.post('/api/user/login', data);
   return response.data;
 };
+
+// функція виходу з системи
+export const logoutUser = async () => {
+  const response = await api.post('/api/user/logout');
+  return response.data;
+};
