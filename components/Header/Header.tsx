@@ -1,10 +1,20 @@
 'use client';
 
 import { useAuthStore } from '@/lib/store/authStore';
+import { logoutUser } from '@/services/api/auth';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export const Header = () => {
+  const router = useRouter();
   const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const handleLogout = async () => {
+    await logoutUser();
+    logout();
+    router.push('/login');
+  };
+
   return (
     <header>
       <div>
@@ -19,7 +29,10 @@ export const Header = () => {
 
       <div>
         {user ? (
-          <p>{user.name}</p>
+          <>
+            <p>{user.name}</p>
+            <button onClick={handleLogout}>Logout</button>
+          </>
         ) : (
           <>
             <Link href="/register">Register</Link>
