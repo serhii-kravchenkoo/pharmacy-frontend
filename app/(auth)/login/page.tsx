@@ -31,7 +31,7 @@ export default function LoginPage() {
       console.log(response);
       setUser(response);
 
-      router.push('/');
+      router.push('/cart');
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
         const message =
