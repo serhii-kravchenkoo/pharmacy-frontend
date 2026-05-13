@@ -1,19 +1,23 @@
 'use client';
 
+import Loader from '@/app/loading';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function CartPage() {
   const user = useAuthStore((state) => state.user);
+  const isLoading = useAuthStore((state) => state.isLoading);
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       router.push('/login');
     }
-  }, [user, router]);
-
+  }, [user, isLoading, router]);
+  if (isLoading) {
+    return <Loader />;
+  }
   if (!user) {
     return null;
   }

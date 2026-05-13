@@ -10,6 +10,7 @@ type Props = {
 
 export const AuthProvider = ({ children }: Props) => {
   const setUser = useAuthStore((state) => state.setUser);
+  const setLoading = useAuthStore((state) => state.setLoading);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -17,13 +18,15 @@ export const AuthProvider = ({ children }: Props) => {
         const response = await api.get('/api/user/user-info');
 
         setUser(response.data);
+        setLoading(false);
       } catch {
         console.log('Not authorized');
+        setLoading(false);
       }
     };
 
     checkAuth();
-  }, [setUser]);
+  }, [setUser, setLoading]);
 
   return <>{children}</>;
 };
