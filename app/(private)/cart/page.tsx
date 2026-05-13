@@ -1,6 +1,6 @@
 'use client';
 
-import Loader from '@/app/loading';
+import Loader from '@/components/Loader/Loader';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -22,5 +22,5 @@ export default function CartPage() {
     return null;
   }
 
-  return <h1>Cart Page</h1>;
+  return <h1>Cart Pager</h1>;
 }
