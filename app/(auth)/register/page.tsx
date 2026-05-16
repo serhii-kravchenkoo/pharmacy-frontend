@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { registerUser } from '@/services/api/auth';
 import { RegisterFormData } from '@/types/auth';
+import { useAuthStore } from '@/lib/store/authStore';
 
 type ErrorResponse = {
   message?: string;
@@ -15,6 +16,7 @@ type ErrorResponse = {
 
 export default function RegisterPage() {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const {
     register,
@@ -26,6 +28,7 @@ export default function RegisterPage() {
     try {
       const response = await registerUser(data);
       console.log(response);
+      setUser(response);
       router.push('/cart');
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
