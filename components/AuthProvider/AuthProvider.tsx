@@ -11,6 +11,7 @@ type Props = {
 export const AuthProvider = ({ children }: Props) => {
   const setUser = useAuthStore((state) => state.setUser);
   const setLoading = useAuthStore((state) => state.setLoading);
+  const loguout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -20,13 +21,13 @@ export const AuthProvider = ({ children }: Props) => {
         setUser(response.data);
         setLoading(false);
       } catch {
-        console.log('Not authorized');
+        loguout();
         setLoading(false);
       }
     };
 
     checkAuth();
-  }, [setUser, setLoading]);
+  }, [setUser, setLoading, loguout]);
 
   return <>{children}</>;
 };
