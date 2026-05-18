@@ -9,9 +9,7 @@ type Props = {
 };
 
 export const AuthProvider = ({ children }: Props) => {
-  const setUser = useAuthStore((state) => state.setUser);
-  const setLoading = useAuthStore((state) => state.setLoading);
-  const loguout = useAuthStore((state) => state.logout);
+const { setUser, setLoading, logout } = useAuthStore();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -21,13 +19,13 @@ export const AuthProvider = ({ children }: Props) => {
         setUser(response.data);
         setLoading(false);
       } catch {
-        loguout();
+        logout();
         setLoading(false);
       }
     };
 
     checkAuth();
-  }, [setUser, setLoading, loguout]);
+  }, [setUser, setLoading, logout]);
 
   return <>{children}</>;
 };
