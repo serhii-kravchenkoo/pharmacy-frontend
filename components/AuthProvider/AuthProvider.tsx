@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const AuthProvider = ({ children }: Props) => {
-const { setUser, setLoading, logout } = useAuthStore();
+  const { setUser, setLoading, logout } = useAuthStore();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -17,9 +17,9 @@ const { setUser, setLoading, logout } = useAuthStore();
         const response = await api.get('/api/user/user-info');
 
         setUser(response.data);
-        setLoading(false);
       } catch {
         logout();
+      } finally {
         setLoading(false);
       }
     };
