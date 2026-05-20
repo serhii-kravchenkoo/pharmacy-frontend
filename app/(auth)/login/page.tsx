@@ -28,9 +28,8 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await loginUser(data);
-      console.log(response);
       setUser(response);
-
+      // router.refresh();
       router.push('/cart');
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse>(error)) {
